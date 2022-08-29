@@ -2,7 +2,7 @@ package asynctask_test
 
 import (
 	"errors"
-	"lanhu-pool/asynctask"
+	"github.com/weecloudy/common/asynctask"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

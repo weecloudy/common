@@ -26,3 +26,12 @@ func isFloatNum(str string) bool {
 
 	return true
 }
+
+func InArray(items []string, item string) bool {
+	for _, eachItem := range items {
+		if eachItem == item {
+			return true
+		}
+	}
+	return false
+}

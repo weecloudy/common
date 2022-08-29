@@ -5,9 +5,9 @@ import (
 	"runtime/debug"
 	"sync"
 
-	"lanhu-logging/logger"
-	"lanhu-pool/container/set"
-	"lanhu-pool/strings"
+	"github.com/weecloudy/common/container/set"
+	"github.com/weecloudy/common/strings"
+	"github.com/weecloudy/logger"
 )
 
 var asyncTaskNames *set.HashSet
