@@ -54,7 +54,7 @@ func TestJoin(t *testing.T) {
 }
 
 func TestWithContext(t *testing.T) {
-	md := MD(map[string]interface{}{RemoteIP: "127.0.0.1", Color: "red", Mirror: true})
+	md := MD(map[string]interface{}{"remoteIP": "127.0.0.1", "color": "red", "mirror": true})
 	c := NewContext(context.Background(), md)
 	ctx := WithContext(c)
 	md1, ok := FromContext(ctx)
@@ -69,28 +69,28 @@ func TestWithContext(t *testing.T) {
 }
 
 func TestBool(t *testing.T) {
-	md := MD{RemoteIP: "127.0.0.1", Color: "red"}
+	md := MD{"remoteIP": "127.0.0.1", "color": "red"}
 	mdcontext := NewContext(context.Background(), md)
-	assert.Equal(t, false, Bool(mdcontext, Mirror))
+	assert.Equal(t, false, Bool(mdcontext, "mirror"))
 
-	mdcontext = NewContext(context.Background(), MD{Mirror: true})
-	assert.Equal(t, true, Bool(mdcontext, Mirror))
+	mdcontext = NewContext(context.Background(), MD{"mirror": true})
+	assert.Equal(t, true, Bool(mdcontext, "mirror"))
 
-	mdcontext = NewContext(context.Background(), MD{Mirror: "true"})
-	assert.Equal(t, true, Bool(mdcontext, Mirror))
+	mdcontext = NewContext(context.Background(), MD{"mirror": "true"})
+	assert.Equal(t, true, Bool(mdcontext, "mirror"))
 
-	mdcontext = NewContext(context.Background(), MD{Mirror: "1"})
-	assert.Equal(t, true, Bool(mdcontext, Mirror))
+	mdcontext = NewContext(context.Background(), MD{"mirror": "1"})
+	assert.Equal(t, true, Bool(mdcontext, "mirror"))
 
-	mdcontext = NewContext(context.Background(), MD{Mirror: "0"})
-	assert.Equal(t, false, Bool(mdcontext, Mirror))
+	mdcontext = NewContext(context.Background(), MD{"mirror": "0"})
+	assert.Equal(t, false, Bool(mdcontext, "mirror"))
 
 }
 func TestInt64(t *testing.T) {
-	mdcontext := NewContext(context.Background(), MD{Uid: int64(1)})
-	assert.Equal(t, int64(1), Int64(mdcontext, Uid))
-	mdcontext = NewContext(context.Background(), MD{Uid: int64(2)})
-	assert.NotEqual(t, int64(1), Int64(mdcontext, Uid))
-	mdcontext = NewContext(context.Background(), MD{Uid: 10})
-	assert.NotEqual(t, int64(10), Int64(mdcontext, Uid))
+	mdcontext := NewContext(context.Background(), MD{"uid": int64(1)})
+	assert.Equal(t, int64(1), Int64(mdcontext, "uid"))
+	mdcontext = NewContext(context.Background(), MD{"uid": int64(2)})
+	assert.NotEqual(t, int64(1), Int64(mdcontext, "uid"))
+	mdcontext = NewContext(context.Background(), MD{"uid": 10})
+	assert.NotEqual(t, int64(10), Int64(mdcontext, "uid"))
 }

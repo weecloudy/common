@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 // MD is a mapping from metadata keys to values.
@@ -14,6 +15,31 @@ type mdKey struct{}
 // Len returns the number of items in md.
 func (md MD) Len() int {
 	return len(md)
+}
+
+// Get returns the value associated with the passed key.
+func (m MD) Get(key string) interface{} {
+	k := strings.ToLower(key)
+	return m[k]
+}
+
+// Set stores the key-value pair.
+func (m MD) Set(key string, value interface{}) {
+	if key == "" || value == "" {
+		return
+	}
+	k := strings.ToLower(key)
+	m[k] = value
+}
+
+// Range iterate over element in metadata.
+func (m MD) Range(f func(k, v interface{}) bool) {
+	for k, v := range m {
+		ret := f(k, v)
+		if !ret {
+			break
+		}
+	}
 }
 
 // Copy returns a copy of md.
@@ -35,10 +61,12 @@ func Join(mds ...MD) MD {
 }
 
 // New creates an MD from a given key-value map.
-func New(m map[string]interface{}) MD {
+func New(mds ...map[string]interface{}) MD {
 	md := MD{}
-	for k, val := range m {
-		md[k] = val
+	for _, m := range mds {
+		for k, val := range m {
+			md[k] = val
+		}
 	}
 	return md
 }
